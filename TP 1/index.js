@@ -39,7 +39,3 @@ while (tiempo <= 3600 ) {
 
 console.log('personas atendidas', atendidos);
 console.table(cola);
-
-    
-
-    
