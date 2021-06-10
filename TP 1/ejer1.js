@@ -1,13 +1,15 @@
-//Problema 1: 
-/*
-Hora de inicio de la simulacion: 08:00 hrs
-Hora de fin de la simulacion: 09:00 hrs
-Personas en la cola: 3
-Estado del servidor: 0 -> desocupado
-Tiempo de arrivo de clientes: 45 segundos
-Tiempo de fin de servicio: 40 segundos
-*/
-document.getElementById("ejecutarCola").addEventListener("click", function(e) {
+document.getElementById("ejecutarCola").addEventListener('click', function(e) {
+
+    //Problema 1: 
+    /*
+    Hora de inicio de la simulacion: 08:00 hrs
+    Hora de fin de la simulacion: 09:00 hrs
+    Personas en la cola: 3
+    Estado del servidor: 0 -> desocupado
+    Tiempo de arrivo de clientes: 45 segundos
+    Tiempo de fin de servicio: 40 segundos
+    */
+
     let q = 3;
     let tiempo = 0;
     let finSimu = 900;
@@ -20,6 +22,7 @@ document.getElementById("ejecutarCola").addEventListener("click", function(e) {
     let i = 0
 
     console.log('Hora Actual || Proxima llegada || Proximo fin de servicio || Cola ||  Puesto de servicio');
+
     console.log(`${convertir(tiempo)}  ||  ${convertir(proxLlegada)}  ||  ${convertir(proxFinServicio)} || ${q} || ${ps}`);
     pintarTabla(convertir(tiempo), convertir(proxLlegada), convertir(proxFinServicio), q, ps)
         //`${horas} horas, ${minutos} minutos y ${segundos} segundos.`;
@@ -60,27 +63,59 @@ document.getElementById("ejecutarCola").addEventListener("click", function(e) {
 
     console.log('personas atendidas', atendidos);
     //console.table(cola);
-
-
-
-    function convertir(segundosP) {
-
-        const segundos = (Math.round(segundosP % 60));
-        const horas = (Math.floor(segundosP / 3600)) + 8;
-        const minutos = (Math.floor(segundosP / 60) % 60);
-
-        //output.innerHTML = `<br>${horas} horas, ${minutos} minutos y ${segundos} segundos.`;
-        return `${horas}:${minutos}:${segundos}`;
-
-
-    }
 });
-pintarTabla = (tI, tL, tF, c, eS) => {
-    document.getElementById("tablaprueba").insertRow(-1).innerHTML = `<td>${tI}</td>
-  <td>${tL}</td>
-  <td>${tF}</td>
-   <td>${c}</td>
-  <td>${eS}</td>`
+
+
+function convertir(segundosP) {
+
+    const segundos = (Math.round(segundosP % 60));
+    const horas = (Math.floor(segundosP / 3600)) + 8;
+    const minutos = (Math.floor(segundosP / 60) % 60);
+
+    //output.innerHTML = `<br>${horas} horas, ${minutos} minutos y ${segundos} segundos.`;
+    return `${horas}:${minutos}:${segundos}`;
+
+
 }
 
+
 //console.log(convertir(3660));
+/*
+ const tiempoLimite = 3600
+ let tiempoInicial = 1
+ let tiempoLlegadaCliente = 3
+ let tiempoAtencionCliente = 0
+ let clientes = 0
+ let atendidos = 0
+ let estadoServicio = true
+ 
+ while(tiempoInicial < tiempoLimite){ 
+ 
+   
+  
+  if(tiempoInicial % tiempoLlegadaCliente == 0){
+    clientes++
+    tiempoLlegadaCliente = tiempoLlegadaCliente+3
+    tiempoAtencionCliente = tiempoInicial+10
+  }
+   
+ pintarTabla(tiempoInicial,tiempoLlegadaCliente,tiempoAtencionCliente,clientes,1)
+ 
+  
+   
+ 
+   
+   tiempoInicial++
+ 
+ }
+ */
+
+// });
+
+pintarTabla = (tI, tL, tF, c, eS) => {
+    document.getElementById("tablaprueba").insertRow(-1).innerHTML = `<td>${tI}</td>
+   <td>${tL}</td>
+   <td>${tF}</td>
+    <td>${c}</td>
+   <td>${eS}</td>`
+}
