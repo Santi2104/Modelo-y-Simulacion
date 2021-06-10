@@ -13,19 +13,22 @@ let tiempo = 0;
 let finSimu = 900;
 let proxLlegada = 300;
 let proxFinServicio = 180;
-let deltaFinServicio = 40
-let deltaLlegada = 45
+let deltaFinServicio = 0;
+let deltaLlegada = 0;
 let atendidos = 0;
 let ps = true;
 let i = 0
 
+
+
+
 console.log('Hora Actual || Proxima llegada || Proximo fin de servicio || Cola ||  Puesto de servicio');
 console.log(`${convertir(tiempo)}  ||  ${convertir(proxLlegada)}  ||  ${convertir(proxFinServicio)} || ${q} || ${ps}`);
 
-//`${horas} horas, ${minutos} minutos y ${segundos} segundos.`;
 
-while (i <= 10) {
-
+while (i <= 15) {
+  deltaLlegada = randomLlegada(20,50);
+  deltaFinServicio = randomLlegada(10,50);
   //Determino el proximo evento
   if (proxLlegada <= proxFinServicio) {
     //Estamos en una llegada
@@ -48,14 +51,15 @@ while (i <= 10) {
       proxFinServicio = tiempo + deltaFinServicio;
     } else {
       ps = false;
-      proxFinServicio = 9999; //Numero grande equivale a que no hay proximo fin de servicio
+      proxFinServicio = 9999;
     }
   }
 
   console.log('-----------------------------------');
+  console.log('Hora Actual || Proxima llegada || Proximo fin de servicio || Cola ||  Puesto de servicio');
   console.log(`${convertir(tiempo)}  ||  ${convertir(proxLlegada)}  ||  ${convertir(proxFinServicio)} || ${q} || ${ps}`);
   i++;
-
+  alert();
 }
 
 console.log('personas atendidas', atendidos);
@@ -65,15 +69,26 @@ console.log('personas atendidas', atendidos);
 
 function convertir(segundosP) {
 
+  if(segundosP == null){
+    return `Sin hora disponible`;
+  }
+
   const segundos = (Math.round(segundosP % 60));
   const horas = (Math.floor(segundosP / 3600)) + 8;
   const minutos = (Math.floor(segundosP / 60) % 60);
 
   //output.innerHTML = `<br>${horas} horas, ${minutos} minutos y ${segundos} segundos.`;
-  return `${horas}:${minutos}:${segundos}`;
+  return `${horas} horas, ${minutos} minutos y ${segundos} segundos.`;
 
 
 }
+
+function randomLlegada(min, max) {
+
+  max += 1;
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
 
 
 //console.log(convertir(3660));
