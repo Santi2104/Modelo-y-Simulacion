@@ -74,6 +74,3 @@ function convertir(segundosP) {
 
 
 }
-
-
-//console.log(convertir(3660));

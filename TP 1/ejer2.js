@@ -70,25 +70,7 @@ while (i <= 10) {
 }
 
 console.log('personas atendidas', atendidos);
-//console.table(cola);
 
-
-
-
-/*function llegada() {
-    tiempo = proxLlegada;
-    if (ps == false) {
-        if(psStatus){
-            ps = true;
-            
-        }else{
-            ps = false;
-            q += 1;
-        }
-        proxFinServicio = tiempo + deltaFinServicio;
-      }//La llegada no esta sumando gente a la cola cuando el servidor esta en su puesto y ocupado
-      proxLlegada = tiempo + deltaLlegada;
-}*/
 
 function llegada() {
     tiempo = proxLlegada;
