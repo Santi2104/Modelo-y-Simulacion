@@ -13,7 +13,8 @@ let deltaTrabajo = 30;
 let atendidos = 0;
 let ps = false;
 let psStatus = true;
-let i = 0
+let i = 0;
+let cicloServidor = 0;
 let op = 0;
 
 
@@ -70,6 +71,7 @@ while (i <= 10) {
 }
 
 console.log('personas atendidas', atendidos);
+console.log('Ciclos de descanso del servidor', cicloServidor);
 
 
 function llegada() {
@@ -121,6 +123,7 @@ function trabajar(){
     tiempo = proxTrabajo
     psStatus = true;
     proxDescanso = proxTrabajo + deltaTrabajo;
+    cicloServidor ++;
     proxTrabajo = 9999;
 
 }

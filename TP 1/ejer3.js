@@ -4,17 +4,17 @@ let tiempo = 0;
 let finSimu = 900;
 let proxLlegada = 20;
 let proxFinServicio = 9999;
-let proxSalidaCola = 9999
-let deltaFinServicio = 40;
-let deltaLlegada = 15;
-let deltaSalidaCola = 20;
+let proxSalidaCola = 9999;
+let deltaFinServicio = 0;
+let deltaLlegada = 0;
+let deltaSalidaCola = 0;
 let atendidos = 0;
 let ps = false;
 let i = 0;
 
 
+proxLlegada = randomLlegada(10,40);
 
-//Agregar la parte aleatoria al problema
 console.log('Hora actual', convertir(tiempo));
 console.log('Proxima llegada', convertir(proxLlegada));
 console.log('Proximo fin de servicio', convertir(proxFinServicio));
@@ -22,30 +22,36 @@ console.log('Cola', q);
 console.log('Puesto de servicio', ps);
 
 
+
 while (i <= 13) {
 
     let op = proximoEvento(proxLlegada,proxFinServicio,proxSalidaCola,9999);
+    deltaLlegada = randomLlegada(10,40);
+    deltaFinServicio = randomFinServicio(20,50);
+    deltaSalidaCola = randomSalidaCola(5,30);
     switch (op) {
         case 1:
             llegada()
             console.log('-----------------------------------');
-            console.log('LLEGADA', op)
+            console.log('LLEGADA', op);
             break;
         case 2:
-            finServicio()
+            finServicio();
             console.log('-----------------------------------');
             console.log('FINSERVICIO', op)
             break;    
         case 3:
-            salidaCola()
+            salidaCola();
             console.log('-----------------------------------');
             console.log('SALIDA DE COLA', op);
             break;            
         default:
             if(proxLlegada == proxFinServicio){
               llegada();
-            }else{
+            }else if(proxFinServicio == proxSalidaCola){
               finServicio();
+            }else{
+              salidaCola();
             }       
             console.log('-----------------------------------');
             console.log('SALIO POR EL BREAK', op) 
@@ -76,9 +82,6 @@ function llegada() {
       ps = true;
       proxFinServicio = tiempo + deltaFinServicio;
     } else {
-        /*
-            tengo que calcular en cada llegada cual es el cliente con el menor tiempo y ponerlo en el proximo abandono
-        */
       q.push(tiempo);
       aux = tiempo + deltaSalidaCola;
       if(proxSalidaCola > aux){
@@ -110,20 +113,16 @@ function finServicio() {
 }
 
 function salidaCola() {
-    let aux;
+    let min = Math.min(...q) + deltaSalidaCola;
     tiempo = proxSalidaCola;
-    aux = tiempo - deltaSalidaCola;
-    q.forEach((elemento,index) => {
-        if(elemento == aux){
-            q.splice(index,1);
-        }
-    });
+    q.splice(q.indexOf(min,1));
+
     if(q.sort() == 0){
       proxSalidaCola = 9999;
     }else{
       proxSalidaCola = Math.min(...q) + deltaSalidaCola;
     }
-    
+    aux = 0;
 }
 
 
@@ -144,10 +143,27 @@ function convertir(segundosP) {
 
 }
 
-function random(min, max, op) {
+
+
+function randomLlegada(min, max) {
 
   max += 1;
   return Math.floor(Math.random() * (max - min) + min);
+  
+}
+
+function randomFinServicio(min, max) {
+
+  max += 1;
+  return Math.floor(Math.random() * (max - min) + min);
+  
+}
+
+function randomSalidaCola(min, max) {
+
+  max += 1;
+  return Math.floor(Math.random() * (max - min) + min);
+  
 }
 
 function proximoEvento(a,b,c,d) {
