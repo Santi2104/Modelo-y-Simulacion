@@ -6,7 +6,7 @@ let proxLlegadaA = 15;
 let proxLlegadaB = 8;
 let proxFinServicio = 9999;
 let deltaFinServicio = 17;
-let deltaLlegadaA = 24;
+let deltaLlegadaA = 27;
 let deltaLlegadaB = 13;
 let atendidos = 0;
 let ps = false;
@@ -45,7 +45,7 @@ while (i <= 15) {
             if(proxLlegadaA == proxLlegadaB){
                 llegadaClienteA()
             }else if(proxLlegadaA == proxFinServicio){
-                llegadaClienteA
+                llegadaClienteA();
             }else{
                 finServicio();
             }
@@ -86,7 +86,7 @@ function llegadaClienteA() {
 }
 
 function llegadaClienteB() {
-    tiempo = proxLlegadaA;
+    tiempo = proxLlegadaB;
     if (ps == false) {
         ps = true;
         proxFinServicio = tiempo + deltaFinServicio;

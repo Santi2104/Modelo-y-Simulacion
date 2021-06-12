@@ -7,10 +7,11 @@ let proxFinServicio = 9999;
 let proxSalidaCola = 9999;
 let deltaFinServicio = 0;
 let deltaLlegada = 0;
-let deltaSalidaCola = 0;
+let deltaSalidaCola = 15;
 let atendidos = 0;
 let ps = false;
 let i = 0;
+let clientes = [];
 
 
 proxLlegada = randomLlegada(10,40);
@@ -18,12 +19,12 @@ proxLlegada = randomLlegada(10,40);
 console.log('Hora actual', convertir(tiempo));
 console.log('Proxima llegada', convertir(proxLlegada));
 console.log('Proximo fin de servicio', convertir(proxFinServicio));
-console.log('Cola', q);
+console.log('Cola', clientes);
 console.log('Puesto de servicio', ps);
 
 
 
-while (i <= 13) {
+while (i <= 15) {
 
     let op = proximoEvento(proxLlegada,proxFinServicio,proxSalidaCola,9999);
     deltaLlegada = randomLlegada(10,40);
@@ -54,7 +55,7 @@ while (i <= 13) {
               salidaCola();
             }       
             console.log('-----------------------------------');
-            console.log('SALIO POR EL BREAK', op) 
+            console.log('DEFAULT', op) 
             break;
     }
 
@@ -65,7 +66,7 @@ while (i <= 13) {
   console.log('Hora actual', convertir(tiempo));
   console.log('Proxima llegada', convertir(proxLlegada));
   console.log('Proximo fin de servicio', convertir(proxFinServicio));
-  console.log('Cola', q);
+  console.log('Cola', clientes);
   console.log('Proxima salida de cola', convertir(proxSalidaCola));
   console.log('Puesto de servicio', ps);
   i++;
@@ -77,15 +78,24 @@ console.log('personas atendidas', atendidos);
 
 function llegada() {
     let aux = 0;
+    let arrayAux = [];
     tiempo = proxLlegada;
     if (ps == false) {
       ps = true;
       proxFinServicio = tiempo + deltaFinServicio;
     } else {
-      q.push(tiempo);
+      clientes.push({
+        llegada: tiempo,
+        salida: tiempo + deltaSalidaCola,
+      });
       aux = tiempo + deltaSalidaCola;
       if(proxSalidaCola > aux){
-        proxSalidaCola = Math.min(...q) + deltaSalidaCola;
+
+        clientes.forEach(cliente => {
+          arrayAux.push(cliente.salida);
+          
+      });
+        proxSalidaCola = Math.min(...arrayAux);
       }
     }
     proxLlegada = tiempo + deltaLlegada;
@@ -93,17 +103,24 @@ function llegada() {
 }
 
 function finServicio() {
+    let arrayAux = [];
     tiempo = proxFinServicio;
     ps = false;
     atendidos += 1;
-    if (q.sort() != 0) {
-      q.shift();
+    if (clientes.sort() != 0) {
+      clientes.shift();
       ps = true;
       proxFinServicio = tiempo + deltaFinServicio;
-      if(q.sort() == 0){
+      
+      if(clientes.sort() == 0){
         proxSalidaCola = 9999;
       }else{
-        proxSalidaCola = Math.min(...q) + deltaSalidaCola;
+        //Calculamos la proxima salida
+        clientes.forEach(cliente => {
+          arrayAux.push(cliente.salida);
+          
+      });
+        proxSalidaCola = Math.min(...arrayAux);
       }
       //proxSalidaCola = Math.min(...q) + deltaSalidaCola;
     } else {
@@ -113,16 +130,22 @@ function finServicio() {
 }
 
 function salidaCola() {
-    let min = Math.min(...q) + deltaSalidaCola;
+    //let min = Math.min(...q) + deltaSalidaCola;
+    let arrayAux = [];
+    clientes.forEach(cliente => {
+      arrayAux.push(cliente.salida);
+      
+  });
+    const lugar = arrayAux.indexOf(Math.min(...arrayAux));
     tiempo = proxSalidaCola;
-    q.splice(q.indexOf(min,1));
-
-    if(q.sort() == 0){
+    //q.splice(q.indexOf(min,1));
+    clientes.splice(lugar,1);
+    if(clientes.sort() == 0){
       proxSalidaCola = 9999;
     }else{
-      proxSalidaCola = Math.min(...q) + deltaSalidaCola;
+      proxSalidaCola = Math.min(...arrayAux);
     }
-    aux = 0;
+
 }
 
 
