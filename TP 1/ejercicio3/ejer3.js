@@ -1,4 +1,4 @@
-//Problema 2: 
+//Problema 3: 
 let q = [];
 let tiempo = 0;
 let finSimu = 900;
