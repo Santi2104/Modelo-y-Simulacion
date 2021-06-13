@@ -8,11 +8,13 @@ let proxFinServicio = 9999;
 let deltaFinServicio = 17;
 let deltaLlegadaA = 27;
 let deltaLlegadaB = 13;
-let atendidos = 0;
+let atendidosA = 0;
+let atendidosB = 0;
 let ps = false;
 let i = 0;
+let flag = false; //False = cliente b , True = cliente A
 
-//Colocar variables para contar cantidad de atendidos de clientes A y B
+
 console.log('Hora actual', convertir(tiempo));
 console.log('Proxima llegada CLIENTE A', convertir(proxLlegadaA));
 console.log('Proxima llegada CLIENTE B', convertir(proxLlegadaB));
@@ -25,6 +27,9 @@ console.log('Puesto de servicio', ps);
 while (i <= 15) {
 
     op = proximoEvento(proxLlegadaA,proxLlegadaB,proxFinServicio,9999);
+    deltaLlegadaA = randomLlegadaA(30,59);
+    deltaLlegadaB = randomLlegadaB(5,45);
+    deltaFinServicio = randomFinServicio(15,30);
     switch (op) {
         case 1:
             llegadaClienteA()
@@ -72,12 +77,15 @@ while (i <= 15) {
   alert();
 }
 
+console.log('cantidad de clientes A atendidos', atendidosA);
+console.log('cantidad de clientes B atendidos', atendidosB);
 
 function llegadaClienteA() {
 
     tiempo = proxLlegadaA;
     if (ps == false) {
         ps = true;
+        flag = true;
         proxFinServicio = tiempo + deltaFinServicio;
     } else {
         qA += 1;
@@ -89,6 +97,7 @@ function llegadaClienteB() {
     tiempo = proxLlegadaB;
     if (ps == false) {
         ps = true;
+        flag = false;
         proxFinServicio = tiempo + deltaFinServicio;
     } else {
         qB += 1;
@@ -115,14 +124,21 @@ function llegadaClienteB() {
 function finServicio() {
     tiempo = proxFinServicio;
     ps = false;
-    atendidos += 1;
+    //atendidos += 1;
+    if(flag){
+        atendidosA ++;
+    }else{
+        atendidosB ++;
+    }
     if (qA > 0) {
         qA -= 1;
         ps = true;
+        flag = true;
         proxFinServicio = tiempo + deltaFinServicio;
     } else if(qB > 0){
         qB -= 1;
         ps = true;
+        flag = false;
         proxFinServicio = tiempo + deltaFinServicio;
     }else{
         ps = false;
@@ -147,6 +163,30 @@ function convertir(segundosP) {
   
   
   }
+
+  function randomLlegadaA(min, max) {
+
+    max += 1;
+    return Math.floor(Math.random() * (max - min) + min);
+    
+  }
+
+  function randomLlegadaB(min, max) {
+
+    max += 1;
+    return Math.floor(Math.random() * (max - min) + min);
+    
+  }
+
+  function randomFinServicio(min, max) {
+
+    max += 1;
+    return Math.floor(Math.random() * (max - min) + min);
+    
+  }
+
+
+
 
 function proximoEvento(a,b,c,d) {
     

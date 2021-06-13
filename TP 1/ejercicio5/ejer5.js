@@ -1,5 +1,5 @@
 //Problema 2: 
-let q = 0;
+let q = 3;
 let tiempo = 0;
 let finSimu = 900;
 let proxLlegada = 20;
@@ -52,7 +52,7 @@ while (i <= 10) {
         default:
             if(proxLlegada == proxFinServicio){
               llegada();
-            }else if(proxFinServicio == proxSalidaCola){
+            }else if(proxFinServicio == proxSalidaZS){
               finServicio();
             }else{
               salidaZS();
