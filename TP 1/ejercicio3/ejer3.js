@@ -70,7 +70,7 @@ while (i <= 15) {
   console.log('Proxima salida de cola', convertir(proxSalidaCola));
   console.log('Puesto de servicio', ps);
   i++;
-  alert();
+  
 }
 
 console.log('personas atendidas', atendidos);
